@@ -1,0 +1,12 @@
+todo:
+
+	1. naprawic strzelanie.
+	2. detekcja kolizji z blasterami.
+	3. zabijanie wrogow i usuwanie ich instancji.
+	4. kolizja miedzy wrogami i odbijanie się ich od siebie.
+	5. schodzacy wrogowie w dół.
+	
+Ad 1.
+	Okej, a więc - wychodzi na to, że przez to że pobierane są dane przez oba wątki, nie daje rady wyrenderować tego gnojka
+	
+	ale dlaczego? co go powstrzymuje?
