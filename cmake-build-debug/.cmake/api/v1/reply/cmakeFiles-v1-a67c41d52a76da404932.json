@@ -390,13 +390,21 @@
 		{
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/CMakeFiles/3.23.2/CMakeCCompiler.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB/cmake-build-debug",
-		"source" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB"
+		"build" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug",
+		"source" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders"
 	},
 	"version" : 
 	{

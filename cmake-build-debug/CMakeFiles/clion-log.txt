@@ -1,4 +1,4 @@
-/home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/ninja/linux/ninja -G Ninja -S /home/szczerbiakko/CLionProjects/TEST_JAKUB -B /home/szczerbiakko/CLionProjects/TEST_JAKUB/cmake-build-debug
+/home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/ninja/linux/ninja -G Ninja -S /home/szczerbiakko/SpaceInvaders/SpaceInvaders -B /home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug
 -- The C compiler identification is GNU 11.3.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
@@ -7,4 +7,4 @@
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/szczerbiakko/CLionProjects/TEST_JAKUB/cmake-build-debug
+-- Build files have been written to: /home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug

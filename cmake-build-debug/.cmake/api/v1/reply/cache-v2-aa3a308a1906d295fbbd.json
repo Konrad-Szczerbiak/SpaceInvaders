@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB/cmake-build-debug"
+			"value" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -463,7 +463,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB"
+			"value" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -986,6 +986,18 @@
 			"value" : "FALSE"
 		},
 		{
+			"name" : "SDL2_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for SDL2."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/usr/lib/x86_64-linux-gnu/cmake/SDL2"
+		},
+		{
 			"name" : "TEST_JAKUB_BINARY_DIR",
 			"properties" : 
 			[
@@ -995,7 +1007,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB/cmake-build-debug"
+			"value" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug"
 		},
 		{
 			"name" : "TEST_JAKUB_IS_TOP_LEVEL",
@@ -1019,7 +1031,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/szczerbiakko/CLionProjects/TEST_JAKUB"
+			"value" : "/home/szczerbiakko/SpaceInvaders/SpaceInvaders"
 		}
 	],
 	"kind" : "cache",
