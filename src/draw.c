@@ -6,15 +6,24 @@
 #include "SDL2/SDL.h"
 #include <SDL2/SDL_image.h>
 
+_Noreturn static void RenderingModule_RenderTask(void* arg0);
+
+E_OpResult RenderingModule_Init(void* arg0)
+{
+    pthread_t renderThread;
+
+    pthread_create(renderThread, NULL, RenderingModule_RenderTask, arg0);
+}
+
 static E_OpResult renderObject(void* rendererPtr, void* texture, void* hitboxPtr);
 
-void Draw_GenerateRendererVisuals(void* rendererPtr, uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
+void RenderingModule_GenerateRendererVisuals(void* rendererPtr, uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
     SDL_SetRenderDrawColor((SDL_Renderer*)rendererPtr, red, green, blue, alpha);
     SDL_RenderClear((SDL_Renderer*)rendererPtr);
 }
 
-void Draw_PresentGeneratedVisuals(void* rendererPtr)
+void RenderingModule_PresentGeneratedVisuals(void* rendererPtr)
 {
     SDL_RenderPresent(rendererPtr);
 }
@@ -24,7 +33,7 @@ static void* _SG_EnemyTexturePtr = NULL;
 static void* _SG_leftShotTexturePtr = NULL;
 static void* _SG_rightShotTexturePtr = NULL;
 
-E_OpResult setTexture(void* texturePtr, E_TextureType type)
+E_OpResult RenderingModule_SetTexture(void* texturePtr, E_TextureType type)
 {
     E_OpResult retval = eFailure;
     if (texturePtr != NULL)
@@ -49,7 +58,7 @@ E_OpResult setTexture(void* texturePtr, E_TextureType type)
     return retval;
 }
 
-void* getTexture(E_TextureType type)
+void* RenderingModule_GetTexture(E_TextureType type)
 {
     switch (type)
     {
@@ -65,7 +74,7 @@ void* getTexture(E_TextureType type)
 }
 
 
-void* Draw_LoadTexture(void* rendererPtr, const char* filename)
+void* RenderingModule_LoadTexture(void* rendererPtr, const char* filename)
 {
     SDL_Texture* texturePtr;
 
@@ -74,7 +83,7 @@ void* Draw_LoadTexture(void* rendererPtr, const char* filename)
     return (void*)texturePtr;
 }
 
-void* Draw_CreateTextureFieldRectangle(int xPos, int yPos, int width, int height)
+void* RenderingModule_CreateTextureFieldRectangle(int xPos, int yPos, int width, int height)
 {
     SDL_Rect* newReturnedRectangularField = NULL;
     if ((newReturnedRectangularField = (SDL_Rect*)calloc(1, sizeof(SDL_Rect))) == NULL )
@@ -92,7 +101,7 @@ void* Draw_CreateTextureFieldRectangle(int xPos, int yPos, int width, int height
     return (void*)newReturnedRectangularField;
 }
 
-void Draw_DeleteTextureFieldRectangle(void* textureFieldPtr)
+void RenderingModule_DeleteTextureFieldRectangle(void* textureFieldPtr)
 {
     free(textureFieldPtr);
 }
@@ -131,7 +140,7 @@ static void* _SG_playerHitboxRectPtr = NULL;
 static void* _SG_leftShotRectPtr = NULL;
 static void* _SG_rightShotRectPtr = NULL;
 
-void setHitbox(void* textureFieldPtr, E_TextureType type)
+void RenderingModule_SetHitbox(void* textureFieldPtr, E_TextureType type)
 {
     switch (type)
     {
@@ -147,7 +156,7 @@ void setHitbox(void* textureFieldPtr, E_TextureType type)
     }
 }
 
-void* getHitbox(E_TextureType type)
+void* RenderingModule_GetHitbox(E_TextureType type)
 {
     switch (type)
     {
@@ -194,10 +203,14 @@ E_OpResult RenderingModule_RenderEntity(void* pEntity)
     return eUnnecessary;
 }
 
-_Noreturn void RenderingModule_RenderTask(__attribute__((unused))void* arg0)
+_Noreturn static void RenderingModule_RenderTask(void* arg0)
 {
     timer_t rendererTimer;
     clockid_t cpuClockID = 0;
+
+    T_Ship** shipsArrays = arg0;
+
+    T_Ship* ship = *shipsArrays;
 
     pthread_getcpuclockid(pthread_self(), &cpuClockID);
 
@@ -209,16 +222,16 @@ _Noreturn void RenderingModule_RenderTask(__attribute__((unused))void* arg0)
     while(1)
     {
 
-        Draw_GenerateRendererVisuals(getRendererPtr(), 45, 150, 200, 255);
-//
-//        /// to co wczesniej, ale bardziej zmodułować
-//        RenderingModule_RenderShip(PLAYER);
-//        RenderingModule_RenderShip(ENEMY1);
-//        RenderingModule_RenderShip(ENEMY2);
-//        RenderingModule_RenderShip(ENEMY3);
-//        RenderingModule_RenderShip(ENEMY4);
+        RenderingModule_GenerateRendererVisuals(getRendererPtr(), 45, 150, 200, 255);
 
-        Draw_PresentGeneratedVisuals(getRendererPtr());
+        /// to co wczesniej, ale bardziej zmodułować
+        RenderingModule_RenderShip(arg0);
+        RenderingModule_RenderShip(arg0+1);
+        RenderingModule_RenderShip(arg0+2);
+        RenderingModule_RenderShip(arg0+3);
+        RenderingModule_RenderShip(arg0+4);
+
+        RenderingModule_PresentGeneratedVisuals(getRendererPtr());
 
         sleep(40);
     }

@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: TEST_JAKUB
+# Project: SpaceInvaders
 # Configurations: Debug
 # =============================================================================
 
@@ -41,94 +41,79 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target TEST_JAKUB
+# Object build statements for EXECUTABLE target SpaceInvaders
 
 
 #############################################
-# Order-only phony target for TEST_JAKUB
+# Order-only phony target for SpaceInvaders
 
-build cmake_object_order_depends_target_TEST_JAKUB: phony || CMakeFiles/TEST_JAKUB.dir
+build cmake_object_order_depends_target_SpaceInvaders: phony || CMakeFiles/SpaceInvaders.dir
 
-build CMakeFiles/TEST_JAKUB.dir/src/main.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/main.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/main.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/main.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/main.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/main.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/SDL_Init.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/SDL_Init.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/SDL_Init.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/SDL_Init.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/SDL_Init.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/SDL_Init.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/inputs.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/inputs.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/inputs.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/inputs.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/inputs.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/inputs.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/draw.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/draw.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/draw.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/draw.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/draw.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/draw.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/collison.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/collison.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/collison.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/collison.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/collison.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/collison.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/entities.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/entities.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/entities.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/entities.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/entities.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/entities.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
-build CMakeFiles/TEST_JAKUB.dir/src/enemies.c.o: C_COMPILER__TEST_JAKUB_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/enemies.c || cmake_object_order_depends_target_TEST_JAKUB
-  DEP_FILE = CMakeFiles/TEST_JAKUB.dir/src/enemies.c.o.d
+build CMakeFiles/SpaceInvaders.dir/src/enemies.c.o: C_COMPILER__SpaceInvaders_Debug /home/szczerbiakko/SpaceInvaders/SpaceInvaders/src/enemies.c || cmake_object_order_depends_target_SpaceInvaders
+  DEP_FILE = CMakeFiles/SpaceInvaders.dir/src/enemies.c.o.d
   FLAGS = -g -std=gnu99
   INCLUDES = -I/home/szczerbiakko/SpaceInvaders/SpaceInvaders/inc -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
-  OBJECT_FILE_DIR = CMakeFiles/TEST_JAKUB.dir/src
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_PDB = TEST_JAKUB.pdb
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles/SpaceInvaders.dir/src
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target TEST_JAKUB
+# Link build statements for EXECUTABLE target SpaceInvaders
 
 
 #############################################
-# Link the executable TEST_JAKUB
+# Link the executable SpaceInvaders
 
-build TEST_JAKUB: C_EXECUTABLE_LINKER__TEST_JAKUB_Debug CMakeFiles/TEST_JAKUB.dir/src/main.c.o CMakeFiles/TEST_JAKUB.dir/src/SDL_Init.c.o CMakeFiles/TEST_JAKUB.dir/src/inputs.c.o CMakeFiles/TEST_JAKUB.dir/src/draw.c.o CMakeFiles/TEST_JAKUB.dir/src/collison.c.o CMakeFiles/TEST_JAKUB.dir/src/entities.c.o CMakeFiles/TEST_JAKUB.dir/src/enemies.c.o | /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/local/lib/libSDL2_image.a
+build SpaceInvaders: C_EXECUTABLE_LINKER__SpaceInvaders_Debug CMakeFiles/SpaceInvaders.dir/src/main.c.o CMakeFiles/SpaceInvaders.dir/src/SDL_Init.c.o CMakeFiles/SpaceInvaders.dir/src/inputs.c.o CMakeFiles/SpaceInvaders.dir/src/draw.c.o CMakeFiles/SpaceInvaders.dir/src/collison.c.o CMakeFiles/SpaceInvaders.dir/src/entities.c.o CMakeFiles/SpaceInvaders.dir/src/enemies.c.o | /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/local/lib/libSDL2_image.a
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libSDL2.so  /usr/local/lib/libSDL2_image.a
-  OBJECT_DIR = CMakeFiles/TEST_JAKUB.dir
+  OBJECT_DIR = CMakeFiles/SpaceInvaders.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/TEST_JAKUB.dir/
-  TARGET_FILE = TEST_JAKUB
-  TARGET_PDB = TEST_JAKUB.pdb
+  TARGET_FILE = SpaceInvaders
+  TARGET_PDB = SpaceInvaders.dbg
 
 
 #############################################
@@ -165,7 +150,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /home/szczerbiakko/SpaceInvaders/SpaceInvaders/cmake-build-debug
 
-build all: phony TEST_JAKUB
+build all: phony SpaceInvaders
 
 # =============================================================================
 # Built-in targets
@@ -174,14 +159,14 @@ build all: phony TEST_JAKUB
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCCompiler.cmake.in /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCCompilerABI.c /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCompilerIdDetection.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompileFeatures.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompilerABI.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompilerId.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeFindBinUtils.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseImplicitIncludeInfo.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseImplicitLinkInfo.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseLibraryArchitecture.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystem.cmake.in /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeTestCCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeTestCompilerCommon.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Borland-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Cray-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GHS-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-FindBinUtils.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IAR-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Intel-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/PGI-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SCO-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/TI-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Internal/FeatureTesting.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCCompiler.cmake.in /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCCompilerABI.c /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCompilerIdDetection.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompileFeatures.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompilerABI.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineCompilerId.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeDetermineSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeFindBinUtils.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseImplicitIncludeInfo.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseImplicitLinkInfo.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeParseLibraryArchitecture.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystem.cmake.in /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeTestCCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeTestCompilerCommon.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Borland-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Cray-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GHS-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-FindBinUtils.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IAR-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Intel-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/PGI-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SCO-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/TI-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Internal/FeatureTesting.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake: phony
+build ../CMakeLists.txt /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Compiler/GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU-C.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux-GNU.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/Linux.cmake /home/szczerbiakko/Pulpit/CLion-2022.2/clion-2022.2/bin/cmake/linux/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake /usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake: phony
 
 
 #############################################

@@ -24,12 +24,12 @@ void Collision_GenerateExplosion(E_TextureType type)
     switch (type)
     {
         case ePlayer:
-//            texture2BChanged = getTexture(ePlayer);
-            setTexture(Draw_LoadTexture(getRendererPtr(), "gfx/explosion.png"), ePlayer);
+//            texture2BChanged = RenderingModule_GetTexture(ePlayer);
+            RenderingModule_SetTexture(RenderingModule_LoadTexture(getRendererPtr(), "gfx/explosion.png"), ePlayer);
             break;
         case eEnemy:
-//            texture2BChanged = getTexture(eEnemy);
-            setTexture(Draw_LoadTexture(getRendererPtr(), "gfx/explosion.png"), eEnemy);
+//            texture2BChanged = RenderingModule_GetTexture(eEnemy);
+            RenderingModule_SetTexture(RenderingModule_LoadTexture(getRendererPtr(), "gfx/explosion.png"), eEnemy);
             break;
     }
 }
