@@ -89,11 +89,6 @@ void* getRendererPtr(void)
     return (void*)_SG_Application.renderer;
 }
 
-void sleep(int ms)
-{
-    SDL_Delay(ms);
-}
-
 void GameQuit(void)
 {
     SDL_Quit();

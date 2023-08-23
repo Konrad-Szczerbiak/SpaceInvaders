@@ -1,238 +1,141 @@
-//
-// Created by szczerbiakko on 11.12.22.
-//
-
-#include "draw.h"
+#include "utilities.h"
+#include "pthread.h"
 #include "SDL2/SDL.h"
-#include <SDL2/SDL_image.h>
+#include "SDL2/SDL_image.h"
 
-_Noreturn static void RenderingModule_RenderTask(void* arg0);
+/*
+ * This module should handle rendering etc, so first of all - we have to move everything related to rendering here
+ */
 
-E_OpResult RenderingModule_Init(void* arg0)
+/*
+ * Chce zeby byl to modul odpowiedzialny za renderowanie, wiec renderer i window idzie  tutaj - tak samo jak task renderowania
+ * */
+
+#define DEF_SCREEN_COLOR_HEX 0x00252b52
+
+static pthread_t mg_drawThread = 0;
+static pthread_attr_t mg_drawThreadAttr = {0};
+
+static SDL_DisplayMode mg_screenDisplayMode = {0};
+static SDL_Window* mg_pWindow = NULL;
+static SDL_DisplayMode mg_windowDisplayMode = {0};
+static SDL_Rect mg_windowPosition = {0};
+static SDL_Renderer* mg_pRenderer = NULL;
+static T_HexColor screenColor = {.alphahex = DEF_SCREEN_COLOR_HEX};
+
+static SDL_Texture* mg_playerTexture = NULL;
+static SDL_Rect mg_playerHitbox = {0};
+
+_Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
+static SDL_Rect createPlayer(void);
+
+E_OpResult Draw_ModuleInit(void)
 {
-    pthread_t renderThread;
-
-    pthread_create(renderThread, NULL, RenderingModule_RenderTask, arg0);
+        pthread_create(&mg_drawThread, &mg_drawThreadAttr, &Draw_ThreadFunction, NULL);
 }
 
-static E_OpResult renderObject(void* rendererPtr, void* texture, void* hitboxPtr);
-
-void RenderingModule_GenerateRendererVisuals(void* rendererPtr, uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
+_Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 {
-    SDL_SetRenderDrawColor((SDL_Renderer*)rendererPtr, red, green, blue, alpha);
-    SDL_RenderClear((SDL_Renderer*)rendererPtr);
-}
-
-void RenderingModule_PresentGeneratedVisuals(void* rendererPtr)
-{
-    SDL_RenderPresent(rendererPtr);
-}
-
-static void* _SG_PlayerTexturePtr = NULL;
-static void* _SG_EnemyTexturePtr = NULL;
-static void* _SG_leftShotTexturePtr = NULL;
-static void* _SG_rightShotTexturePtr = NULL;
-
-E_OpResult RenderingModule_SetTexture(void* texturePtr, E_TextureType type)
-{
-    E_OpResult retval = eFailure;
-    if (texturePtr != NULL)
+    /*Get display mode*/
+    if (0 != SDL_GetDesktopDisplayMode(0, &mg_screenDisplayMode))
     {
-        switch (type)
-        {
-            case ePlayer:
-                _SG_PlayerTexturePtr = texturePtr;
-                break;
-            case eEnemy:
-                _SG_EnemyTexturePtr = texturePtr;
-                break;
-            case eLeftShot:
-                _SG_leftShotTexturePtr = texturePtr;
-                break;
-            case eRightShot:
-                _SG_rightShotTexturePtr = texturePtr;
-                break;
-        }
-        retval = eSuccess;
-    }
-    return retval;
-}
-
-void* RenderingModule_GetTexture(E_TextureType type)
-{
-    switch (type)
-    {
-        case ePlayer:
-            return _SG_PlayerTexturePtr;
-        case eEnemy:
-            return _SG_EnemyTexturePtr;
-        case eLeftShot:
-            return _SG_leftShotTexturePtr;
-        case eRightShot:
-            return _SG_rightShotTexturePtr;
-    }
-}
-
-
-void* RenderingModule_LoadTexture(void* rendererPtr, const char* filename)
-{
-    SDL_Texture* texturePtr;
-
-    texturePtr = IMG_LoadTexture(rendererPtr, filename);
-
-    return (void*)texturePtr;
-}
-
-void* RenderingModule_CreateTextureFieldRectangle(int xPos, int yPos, int width, int height)
-{
-    SDL_Rect* newReturnedRectangularField = NULL;
-    if ((newReturnedRectangularField = (SDL_Rect*)calloc(1, sizeof(SDL_Rect))) == NULL )
-    {
-        exit(99);
-    }
-    else
-    {
-        newReturnedRectangularField->w = width;
-        newReturnedRectangularField->h = height;
-        newReturnedRectangularField->x = xPos;
-        newReturnedRectangularField->y = yPos;
+        assert(0);
+        exit(-1);
     }
 
-    return (void*)newReturnedRectangularField;
-}
-
-void RenderingModule_DeleteTextureFieldRectangle(void* textureFieldPtr)
-{
-    free(textureFieldPtr);
-}
-
-static E_OpResult renderObject(void* rendererPtr, void* texture, void* hitboxPtr)
-{
-    E_OpResult retval = eFailure;
-    const char* SDL_Err = NULL;
-    SDL_Rect hitbox = *((SDL_Rect*) hitboxPtr);
-
-    int width = hitbox.w;
-    int height = hitbox.h;
-
-    if ((retval = SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, &width, &height)) == eSuccess )
+    /*Create window - turn into func*/
+    mg_pWindow = SDL_CreateWindow(
+            /*title*/"Game Window",
+            /*x*/SDL_WINDOWPOS_CENTERED,
+            /*y*/SDL_WINDOWPOS_CENTERED,
+            /*w*/mg_screenDisplayMode.w,
+            /*h*/mg_screenDisplayMode.h,
+            /*flags*/SDL_WINDOW_FULLSCREEN
+            );
+    if (NULL == mg_pWindow)
     {
-        if ((retval = SDL_RenderCopy(rendererPtr, texture, NULL, &hitbox)) == eSuccess)
-        {
-            retval = eSuccess;
-            return retval;
-        }
-        else
-        {
-            SDL_Err = SDL_GetError();
-            printf("\n%s\n", SDL_Err);
-        }
+        assert(0);
+        exit(-1);
     }
-    else
+    SDL_GetWindowDisplayMode(mg_pWindow, &mg_windowDisplayMode);
+    SDL_GetWindowPosition(mg_pWindow, &mg_windowPosition.x, &mg_windowPosition.y);
+    mg_windowPosition.w = mg_windowDisplayMode.w;
+    mg_windowPosition.h = mg_windowDisplayMode.h;
+
+    /*Create renderer - turn into func*/
+    mg_pRenderer = SDL_CreateRenderer(
+            /*window*/mg_pWindow,
+            /*index*/-1,
+            /*flags*/SDL_RENDERER_ACCELERATED
+            );
+    if (NULL == mg_pRenderer)
     {
-        SDL_Err = SDL_GetError();
-        printf("\n%s\n", SDL_Err);
-    }
-    return retval;
-}
-
-static void* _SG_playerHitboxRectPtr = NULL;
-static void* _SG_leftShotRectPtr = NULL;
-static void* _SG_rightShotRectPtr = NULL;
-
-void RenderingModule_SetHitbox(void* textureFieldPtr, E_TextureType type)
-{
-    switch (type)
-    {
-        case ePlayer:
-            _SG_playerHitboxRectPtr = textureFieldPtr;
-            break;
-        case eLeftShot:
-            _SG_leftShotRectPtr = textureFieldPtr;
-            break;
-        case eRightShot:
-            _SG_rightShotRectPtr = textureFieldPtr;
-            break;
-    }
-}
-
-void* RenderingModule_GetHitbox(E_TextureType type)
-{
-    switch (type)
-    {
-        case ePlayer:
-            return _SG_playerHitboxRectPtr;
-        case eLeftShot:
-            return _SG_leftShotRectPtr;
-        case eRightShot:
-            return _SG_rightShotRectPtr;
-    }
-}
-
-#include "entities.h"
-
-E_OpResult RenderingModule_RenderShip(void* pShip)
-{
-    E_OpResult retval = eSuccess;
-
-    T_Ship* ship = (T_Ship*)pShip;
-
-    pthread_mutex_lock(ship->mutex);
-    retval |= RenderingModule_RenderEntity(ship->shipPtr);
-    retval |= RenderingModule_RenderEntity(ship->leftLaserPtr);
-    retval |= RenderingModule_RenderEntity(ship->rightLaserPtr);
-    pthread_mutex_unlock(ship->mutex);
-    return retval;
-}
-
-E_OpResult RenderingModule_RenderEntity(void* pEntity)
-{
-    T_Entity* entityPtr = (T_Entity*)pEntity;
-
-    if (EntitiesModule_AreFlagsSet(entityPtr, ENTITY_FLAG_VISIBILITY) == eSuccess)
-    {
-        if (renderObject(getRendererPtr(), entityPtr->texturePtr, entityPtr->hitboxPtr) == eSuccess)
-        {
-            return eSuccess;
-        }
-        else
-        {
-            return eFailure;
-        }
-    }
-    return eUnnecessary;
-}
-
-_Noreturn static void RenderingModule_RenderTask(void* arg0)
-{
-    timer_t rendererTimer;
-    clockid_t cpuClockID = 0;
-
-    T_Ship** shipsArrays = arg0;
-
-    T_Ship* ship = *shipsArrays;
-
-    pthread_getcpuclockid(pthread_self(), &cpuClockID);
-
-    if (timer_create(cpuClockID, NULL, &rendererTimer) != 0)
-    {
-        exit(37);
+        assert(0);
+        exit(-1);
     }
 
-    while(1)
+    /*Set color to flush with*/
+    if (0 != SDL_SetRenderDrawColor(mg_pRenderer, screenColor.red, screenColor.green, screenColor.blue, screenColor.alpha))
     {
-
-        RenderingModule_GenerateRendererVisuals(getRendererPtr(), 45, 150, 200, 255);
-
-        /// to co wczesniej, ale bardziej zmodułować
-        RenderingModule_RenderShip(arg0);
-        RenderingModule_RenderShip(arg0+1);
-        RenderingModule_RenderShip(arg0+2);
-        RenderingModule_RenderShip(arg0+3);
-        RenderingModule_RenderShip(arg0+4);
-
-        RenderingModule_PresentGeneratedVisuals(getRendererPtr());
-
-        sleep(40);
+        assert(0);
+        exit(-1);
     }
+
+    if (0 != SDL_RenderClear(mg_pRenderer))
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    mg_playerHitbox = createPlayer();
+
+    while (1)
+    {
+        SDL_RenderPresent(mg_pRenderer);
+        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, &mg_windowPosition, &mg_playerHitbox);
+        sleep(1);
+    }
+
+}
+
+
+/*jak mamy rejestrować poszczególne tekstury?
+ * może robimy listę?
+ * albo na razie dynamiczna alokacja pamięci?
+ * spróbujmy dynamiczną alokację... na początek...
+ * */
+
+typedef struct {
+    SDL_Texture* playerTexture;
+    SDL_Rect playerHitbox;
+} T_Player;
+
+static T_Player mg_players[1] = {0};
+
+static SDL_Rect createPlayer(void)
+{
+    /*wiec... chce stworzyc recta z spritem gracza, to tyle*/
+    SDL_Rect playerEntity = {
+            .h = mg_windowDisplayMode.h / 10,
+            .w = mg_windowDisplayMode.w / 20,
+            .x = mg_windowPosition.w / 2,
+            .y = mg_windowPosition.h / 2,
+    };
+
+    SDL_Surface* playerTextureImage = NULL;
+    playerTextureImage = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/SUPER_SMPL_PLAYER.png");
+    if (NULL == playerTextureImage)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    mg_playerTexture = SDL_CreateTextureFromSurface(mg_pRenderer, playerTextureImage);
+    if (NULL == mg_playerTexture)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    return playerEntity;
 }
