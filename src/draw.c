@@ -114,7 +114,7 @@ static T_Player mg_players[1] = {0};
 
 static SDL_Rect createPlayer(void)
 {
-    /*wiec... chce stworzyc recta z spritem gracza, to tyle*/
+
     SDL_Rect playerEntity = {
             .h = mg_windowDisplayMode.h / 10,
             .w = mg_windowDisplayMode.w / 20,
