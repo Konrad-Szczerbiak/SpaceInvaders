@@ -8,7 +8,7 @@
 #include "assert.h"
 #include "SDL2/SDL.h"
 
-#define THREAD_SLEEP(ms) SDL_Delay(ms)
+void ThreadSleep(int ms);
 
 typedef void* T_ThreadFunc;
 

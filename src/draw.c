@@ -1,6 +1,4 @@
 #include "utilities.h"
-#include "pthread.h"
-#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
 /*
@@ -95,7 +93,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
-        THREAD_SLEEP(1);
+        ThreadSleep(1);
         SDL_RenderClear(mg_pRenderer);
         SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
     }
@@ -144,22 +142,24 @@ static SDL_Rect createPlayer(void)
     return playerEntity;
 }
 
-int decrementPlayerXCoord(void)
+#define PLAYER_SHIP_SPEED 10
+
+int MovePlayerLeft(void)
 {
-    mg_playerHitbox.x-=10;
+    mg_playerHitbox.x-=PLAYER_SHIP_SPEED;
 }
 
-int incrementPlayerXCoord(void)
+int MovePlayerRight(void)
 {
-    mg_playerHitbox.x+=10;
+    mg_playerHitbox.x+=PLAYER_SHIP_SPEED;
 }
 
-int decrementPlayerYCoord(void)
+int MovePlayerUp(void)
 {
-    mg_playerHitbox.y-=10;
+    mg_playerHitbox.y-=PLAYER_SHIP_SPEED;
 }
 
-int incrementPlayerYCoord(void)
+int MovePlayerDown(void)
 {
-    mg_playerHitbox.y+=10;
+    mg_playerHitbox.y+=PLAYER_SHIP_SPEED;
 }

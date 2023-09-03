@@ -7,7 +7,7 @@
  E_OpResult Draw_ModuleInit(void);
 
 
-int decrementPlayerXCoord(void);
-int incrementPlayerXCoord(void);
-int decrementPlayerYCoord(void);
-int incrementPlayerYCoord(void);
+int MovePlayerLeft(void);
+int MovePlayerRight(void);
+int MovePlayerUp(void);
+int MovePlayerDown(void);
