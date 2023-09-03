@@ -5,3 +5,9 @@
 #include "utilities.h"
 
  E_OpResult Draw_ModuleInit(void);
+
+
+int decrementPlayerXCoord(void);
+int incrementPlayerXCoord(void);
+int decrementPlayerYCoord(void);
+int incrementPlayerYCoord(void);

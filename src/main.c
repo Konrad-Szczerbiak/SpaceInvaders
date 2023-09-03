@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "SDL2/SDL.h"
 #include "utilities.h"
+#include "inputs.h"
 
 int main()
 {
@@ -12,9 +13,11 @@ int main()
 
     Draw_ModuleInit();
 
+    Inputs_ModuleInit();
+
     while (1)
     {
-        sleep(1);
+        THREAD_SLEEP(1);
     }
 
 }

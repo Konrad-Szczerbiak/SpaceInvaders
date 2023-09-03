@@ -24,6 +24,8 @@ static SDL_Renderer* mg_pRenderer = NULL;
 static T_HexColor screenColor = {.alphahex = DEF_SCREEN_COLOR_HEX};
 
 static SDL_Texture* mg_playerTexture = NULL;
+
+/*To powinno być przeniesione do innego modułu*/
 static SDL_Rect mg_playerHitbox = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
@@ -89,11 +91,13 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
     mg_playerHitbox = createPlayer();
 
+
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
-        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, &mg_windowPosition, &mg_playerHitbox);
-        sleep(1);
+        THREAD_SLEEP(1);
+        SDL_RenderClear(mg_pRenderer);
+        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
     }
 
 }
@@ -138,4 +142,24 @@ static SDL_Rect createPlayer(void)
     }
 
     return playerEntity;
+}
+
+int decrementPlayerXCoord(void)
+{
+    mg_playerHitbox.x-=10;
+}
+
+int incrementPlayerXCoord(void)
+{
+    mg_playerHitbox.x+=10;
+}
+
+int decrementPlayerYCoord(void)
+{
+    mg_playerHitbox.y-=10;
+}
+
+int incrementPlayerYCoord(void)
+{
+    mg_playerHitbox.y+=10;
 }
