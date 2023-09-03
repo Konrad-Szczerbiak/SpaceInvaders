@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include "draw.h"
-#include <stdlib.h>
-#include "SDL2/SDL.h"
 #include "utilities.h"
+#include "inputs.h"
 
 int main()
 {
@@ -12,9 +10,11 @@ int main()
 
     Draw_ModuleInit();
 
+    Inputs_ModuleInit();
+
     while (1)
     {
-        sleep(1);
+        ThreadSleep(1);
     }
 
 }

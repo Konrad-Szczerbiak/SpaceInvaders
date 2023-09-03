@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include "stdint.h"
 #include "assert.h"
+#include "SDL2/SDL.h"
+
+void ThreadSleep(int ms);
 
 typedef void* T_ThreadFunc;
 
@@ -26,5 +29,3 @@ typedef enum {
 } E_OpResult;
 
 void Utilities_ConfigureErrorHandling(void);
-
-inline void sleep(int ms);

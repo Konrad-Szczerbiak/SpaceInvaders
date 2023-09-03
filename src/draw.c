@@ -1,6 +1,4 @@
 #include "utilities.h"
-#include "pthread.h"
-#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
 /*
@@ -24,6 +22,8 @@ static SDL_Renderer* mg_pRenderer = NULL;
 static T_HexColor screenColor = {.alphahex = DEF_SCREEN_COLOR_HEX};
 
 static SDL_Texture* mg_playerTexture = NULL;
+
+/*To powinno być przeniesione do innego modułu*/
 static SDL_Rect mg_playerHitbox = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
@@ -89,11 +89,13 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
     mg_playerHitbox = createPlayer();
 
+
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
-        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, &mg_windowPosition, &mg_playerHitbox);
-        sleep(1);
+        ThreadSleep(1);
+        SDL_RenderClear(mg_pRenderer);
+        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
     }
 
 }
@@ -138,4 +140,26 @@ static SDL_Rect createPlayer(void)
     }
 
     return playerEntity;
+}
+
+#define PLAYER_SHIP_SPEED 10
+
+int MovePlayerLeft(void)
+{
+    mg_playerHitbox.x-=PLAYER_SHIP_SPEED;
+}
+
+int MovePlayerRight(void)
+{
+    mg_playerHitbox.x+=PLAYER_SHIP_SPEED;
+}
+
+int MovePlayerUp(void)
+{
+    mg_playerHitbox.y-=PLAYER_SHIP_SPEED;
+}
+
+int MovePlayerDown(void)
+{
+    mg_playerHitbox.y+=PLAYER_SHIP_SPEED;
 }

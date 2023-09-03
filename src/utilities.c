@@ -1,6 +1,4 @@
 #include "utilities.h"
-#include "stdlib.h"
-#include "SDL2/SDL.h"
 
 static void displayErrorMsg(void);
 
@@ -15,7 +13,7 @@ static void displayErrorMsg(void)
     printf("Failure. Last error message was: %s\n", errMsg);
 }
 
-inline void sleep(int ms)
+void ThreadSleep(int ms)
 {
     SDL_Delay(ms);
 }

@@ -5,3 +5,9 @@
 #include "utilities.h"
 
  E_OpResult Draw_ModuleInit(void);
+
+
+int MovePlayerLeft(void);
+int MovePlayerRight(void);
+int MovePlayerUp(void);
+int MovePlayerDown(void);
