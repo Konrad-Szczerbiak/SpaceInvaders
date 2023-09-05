@@ -11,6 +11,13 @@
 
 #define DEF_SCREEN_COLOR_HEX 0x00252b52
 
+typedef enum {
+    UpBorder,
+    LeftBorder,
+    DownBorder,
+    RightBorder,
+} E_Border;
+
 static pthread_t mg_drawThread = 0;
 static pthread_attr_t mg_drawThreadAttr = {0};
 
@@ -23,11 +30,14 @@ static T_HexColor screenColor = {.alphahex = DEF_SCREEN_COLOR_HEX};
 
 static SDL_Texture* mg_playerTexture = NULL;
 
+SDL_Rect mg_PlayerMovementBorder = {0};
+
 /*To powinno być przeniesione do innego modułu*/
 static SDL_Rect mg_playerHitbox = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
-static SDL_Rect createPlayer(void);
+static void createPlayer(void);
+static bool isBorderReached(E_Border borderType, int positionValue);
 
 E_OpResult Draw_ModuleInit(void)
 {
@@ -87,8 +97,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         exit(-1);
     }
 
-    mg_playerHitbox = createPlayer();
-
+    createPlayer();
 
     while (1)
     {
@@ -100,13 +109,6 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
 }
 
-
-/*jak mamy rejestrować poszczególne tekstury?
- * może robimy listę?
- * albo na razie dynamiczna alokacja pamięci?
- * spróbujmy dynamiczną alokację... na początek...
- * */
-
 typedef struct {
     SDL_Texture* playerTexture;
     SDL_Rect playerHitbox;
@@ -114,15 +116,17 @@ typedef struct {
 
 static T_Player mg_players[1] = {0};
 
-static SDL_Rect createPlayer(void)
+static void createPlayer(void)
 {
+    mg_playerHitbox.h = mg_windowDisplayMode.h / 10;
+    mg_playerHitbox.w = mg_windowDisplayMode.w / 20;
+    mg_playerHitbox.x = mg_windowPosition.w / 2;
+    mg_playerHitbox.y = mg_windowPosition.h / 2;
 
-    SDL_Rect playerEntity = {
-            .h = mg_windowDisplayMode.h / 10,
-            .w = mg_windowDisplayMode.w / 20,
-            .x = mg_windowPosition.w / 2,
-            .y = mg_windowPosition.h / 2,
-    };
+    mg_PlayerMovementBorder.x = mg_windowPosition.x;
+    mg_PlayerMovementBorder.y = mg_windowPosition.y;
+    mg_PlayerMovementBorder.w = mg_windowPosition.w - mg_playerHitbox.w;
+    mg_PlayerMovementBorder.h = mg_windowPosition.h - mg_playerHitbox.h;
 
     SDL_Surface* playerTextureImage = NULL;
     playerTextureImage = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/SUPER_SMPL_PLAYER.png");
@@ -138,28 +142,54 @@ static SDL_Rect createPlayer(void)
         assert(0);
         exit(-1);
     }
-
-    return playerEntity;
 }
 
 #define PLAYER_SHIP_SPEED 10
 
 int MovePlayerLeft(void)
 {
-    mg_playerHitbox.x-=PLAYER_SHIP_SPEED;
+    if (isBorderReached(LeftBorder, mg_playerHitbox.x-=PLAYER_SHIP_SPEED))
+    {
+        mg_playerHitbox.x = mg_PlayerMovementBorder.x;
+    }
 }
 
 int MovePlayerRight(void)
 {
-    mg_playerHitbox.x+=PLAYER_SHIP_SPEED;
+    if (isBorderReached(RightBorder, mg_playerHitbox.x+=PLAYER_SHIP_SPEED))
+    {
+        mg_playerHitbox.x = mg_PlayerMovementBorder.x + mg_PlayerMovementBorder.w;
+    }
 }
 
 int MovePlayerUp(void)
 {
-    mg_playerHitbox.y-=PLAYER_SHIP_SPEED;
+    if (isBorderReached(UpBorder, mg_playerHitbox.y-=PLAYER_SHIP_SPEED))
+    {
+        mg_playerHitbox.y = mg_PlayerMovementBorder.y;
+    }
 }
 
 int MovePlayerDown(void)
 {
-    mg_playerHitbox.y+=PLAYER_SHIP_SPEED;
+    if (isBorderReached(DownBorder, mg_playerHitbox.y+=PLAYER_SHIP_SPEED))
+    {
+        mg_playerHitbox.y = mg_PlayerMovementBorder.y + mg_PlayerMovementBorder.h;
+    }
+}
+
+static bool isBorderReached(E_Border borderType, int positionValue)
+{
+    switch (borderType) {
+        case UpBorder:
+            return (positionValue <= mg_PlayerMovementBorder.y);
+        case DownBorder:
+            return (positionValue >= mg_PlayerMovementBorder.y + mg_PlayerMovementBorder.h);
+        case LeftBorder:
+            return (positionValue <= mg_PlayerMovementBorder.x);
+        case RightBorder:
+            return (positionValue >= mg_PlayerMovementBorder.x + mg_PlayerMovementBorder.w);
+        default:
+            return false;
+    }
 }
