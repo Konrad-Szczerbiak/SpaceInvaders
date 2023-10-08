@@ -43,9 +43,11 @@ static SDL_Rect mg_enemyHitbox = {0};
 typedef struct {
     SDL_Texture* playerTexture;
     SDL_Rect playerHitbox;
-} T_Player;
+} T_Ship;
 
-static T_Player mg_players[1] = {0};
+static T_Ship mg_players[1] = {0};
+
+static T_Ship mg_enemy[1] = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
 static void createPlayer(void);
