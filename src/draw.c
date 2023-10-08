@@ -29,14 +29,29 @@ static SDL_Renderer* mg_pRenderer = NULL;
 static T_HexColor screenColor = {.alphahex = DEF_SCREEN_COLOR_HEX};
 
 static SDL_Texture* mg_playerTexture = NULL;
+static SDL_Texture* mg_enemyTexture = NULL;
 
 SDL_Rect mg_PlayerMovementBorder = {0};
+
+SDL_Rect mg_EnemyMovementBorder = {0};
 
 /*To powinno być przeniesione do innego modułu*/
 static SDL_Rect mg_playerHitbox = {0};
 
+static SDL_Rect mg_enemyHitbox = {0};
+
+typedef struct {
+    SDL_Texture* playerTexture;
+    SDL_Rect playerHitbox;
+} T_Player;
+
+static T_Player mg_players[1] = {0};
+
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
 static void createPlayer(void);
+
+static void createEnemy(int x, int y);
+
 static bool isBorderReached(E_Border borderType, int positionValue);
 
 E_OpResult Draw_ModuleInit(void)
@@ -99,22 +114,18 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
     createPlayer();
 
+    createEnemy(0, 0);
+
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
         ThreadSleep(1);
         SDL_RenderClear(mg_pRenderer);
         SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
+        SDL_RenderCopyEx(mg_pRenderer, mg_enemyTexture, NULL, &mg_enemyHitbox, 180, NULL, SDL_FLIP_NONE);
     }
 
 }
-
-typedef struct {
-    SDL_Texture* playerTexture;
-    SDL_Rect playerHitbox;
-} T_Player;
-
-static T_Player mg_players[1] = {0};
 
 static void createPlayer(void)
 {
@@ -143,6 +154,35 @@ static void createPlayer(void)
         exit(-1);
     }
 }
+
+static void createEnemy(int x, int y)
+{
+    mg_enemyHitbox.h = mg_windowDisplayMode.h / 10;
+    mg_enemyHitbox.w = mg_windowDisplayMode.w / 20;
+    mg_enemyHitbox.x = x;
+    mg_enemyHitbox.y = y;
+
+    mg_EnemyMovementBorder.x = mg_windowPosition.x;
+    mg_EnemyMovementBorder.y = mg_windowPosition.y;
+    mg_EnemyMovementBorder.w = mg_windowPosition.w - mg_enemyHitbox.w;
+    mg_EnemyMovementBorder.h = mg_windowPosition.h - mg_enemyHitbox.h;
+
+    SDL_Surface* enemyTextureSurface = NULL;
+    enemyTextureSurface = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/ENEMY.png");
+    if (NULL == enemyTextureSurface)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    mg_enemyTexture = SDL_CreateTextureFromSurface(mg_pRenderer, enemyTextureSurface);
+    if (NULL == mg_enemyTexture)
+    {
+        assert(0);
+        exit(-1);
+    }
+}
+
 
 #define PLAYER_SHIP_SPEED 10
 
