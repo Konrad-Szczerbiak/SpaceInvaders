@@ -49,6 +49,12 @@ _Noreturn static T_ThreadFunc InputsTask(void* arg)
                         break;
                 }
             }
+            else if (SDL_MOUSEBUTTONDOWN == Event.type)
+            {
+                setShootingtrue();
+                SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                break;
+            }
         }
         ThreadSleep(1);
     }
