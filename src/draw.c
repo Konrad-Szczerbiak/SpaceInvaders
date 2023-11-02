@@ -1,6 +1,7 @@
 #include "utilities.h"
 #include "SDL2/SDL_image.h"
-
+#include "draw.h"
+#include "enemyAI.h"
 /*
  * This module should handle rendering etc, so first of all - we have to move everything related to rendering here
  */
@@ -40,19 +41,11 @@ static SDL_Rect mg_playerHitbox = {0};
 
 static SDL_Rect mg_enemyHitbox = {0};
 
-typedef struct {
-    SDL_Texture* playerTexture;
-    SDL_Rect playerHitbox;
-} T_Ship;
-
 static T_Ship mg_players[1] = {0};
-
 static T_Ship mg_enemy[1] = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
 static void createPlayer(void);
-
-static void createEnemy(int x, int y);
 
 static bool isBorderReached(E_Border borderType, int positionValue);
 
@@ -115,8 +108,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     }
 
     createPlayer();
-
-    createEnemy(0, 0);
+    EnemyAI_Init();
 
     while (1)
     {
@@ -124,7 +116,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         ThreadSleep(1);
         SDL_RenderClear(mg_pRenderer);
         SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
-        SDL_RenderCopyEx(mg_pRenderer, mg_enemyTexture, NULL, &mg_enemyHitbox, 180, NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(mg_pRenderer, mg_enemy[0].playerTexture, NULL,  &mg_enemy[0].playerHitbox, 180, NULL, SDL_FLIP_NONE);
     }
 
 }
@@ -157,17 +149,17 @@ static void createPlayer(void)
     }
 }
 
-static void createEnemy(int x, int y)
+void Draw_CreateEnemy(int x, int y)
 {
-    mg_enemyHitbox.h = mg_windowDisplayMode.h / 10;
-    mg_enemyHitbox.w = mg_windowDisplayMode.w / 20;
-    mg_enemyHitbox.x = x;
-    mg_enemyHitbox.y = y;
+    mg_enemy[0].playerHitbox.h = mg_windowDisplayMode.h / 10;
+    mg_enemy[0].playerHitbox.w = mg_windowDisplayMode.w / 20;
+    mg_enemy[0].playerHitbox.x = x;
+    mg_enemy[0].playerHitbox.y = y;
 
-    mg_EnemyMovementBorder.x = mg_windowPosition.x;
-    mg_EnemyMovementBorder.y = mg_windowPosition.y;
-    mg_EnemyMovementBorder.w = mg_windowPosition.w - mg_enemyHitbox.w;
-    mg_EnemyMovementBorder.h = mg_windowPosition.h - mg_enemyHitbox.h;
+    mg_enemy[0].mvmntBorder.x = mg_windowPosition.x;
+    mg_enemy[0].mvmntBorder.y = mg_windowPosition.y;
+    mg_enemy[0].mvmntBorder.w = mg_windowPosition.w - mg_enemy[0].playerHitbox.w;
+    mg_enemy[0].mvmntBorder.h = mg_windowPosition.h - mg_enemy[0].playerHitbox.h;
 
     SDL_Surface* enemyTextureSurface = NULL;
     enemyTextureSurface = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/ENEMY.png");
@@ -177,14 +169,23 @@ static void createEnemy(int x, int y)
         exit(-1);
     }
 
-    mg_enemyTexture = SDL_CreateTextureFromSurface(mg_pRenderer, enemyTextureSurface);
-    if (NULL == mg_enemyTexture)
+    while (!mg_pRenderer)
+    {
+        ThreadSleep(1);
+    }
+
+    mg_enemy[0].playerTexture = SDL_CreateTextureFromSurface(mg_pRenderer, enemyTextureSurface);
+    if (NULL == mg_enemy[0].playerTexture)
     {
         assert(0);
         exit(-1);
     }
 }
 
+ T_Ship* getEnemyPtr(void)
+{
+    return &mg_enemy[0];
+}
 
 #define PLAYER_SHIP_SPEED 10
 

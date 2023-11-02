@@ -4,8 +4,18 @@
  * */
 #include "utilities.h"
 
+typedef struct {
+    SDL_Rect mvmntBorder;
+    SDL_Texture* playerTexture;
+    SDL_Rect playerHitbox;
+} T_Ship;
+
+
  E_OpResult Draw_ModuleInit(void);
 
+ T_Ship* getEnemyPtr(void);
+
+void Draw_CreateEnemy(int x, int y);
 
 int MovePlayerLeft(void);
 int MovePlayerRight(void);

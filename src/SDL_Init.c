@@ -1,7 +1,3 @@
-//
-// Created by szczerbiakko on 05.12.22.
-//
-
 #include "SDL_Init.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

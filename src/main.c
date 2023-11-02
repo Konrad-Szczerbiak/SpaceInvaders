@@ -1,6 +1,7 @@
 #include "draw.h"
 #include "utilities.h"
 #include "inputs.h"
+#include "enemyAI.h"
 
 int main()
 {
@@ -11,6 +12,7 @@ int main()
     Draw_ModuleInit();
 
     Inputs_ModuleInit();
+
 
     while (1)
     {
