@@ -134,7 +134,7 @@ static void createPlayer(void)
     mg_PlayerMovementBorder.h = mg_windowPosition.h - mg_playerHitbox.h;
 
     SDL_Surface* playerTextureImage = NULL;
-    playerTextureImage = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/SUPER_SMPL_PLAYER.png");
+    playerTextureImage = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/DETAILED_PLAYER.png");
     if (NULL == playerTextureImage)
     {
         assert(0);
