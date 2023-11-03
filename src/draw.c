@@ -2,6 +2,7 @@
 #include "SDL2/SDL_image.h"
 #include "draw.h"
 #include "enemyAI.h"
+#include "collision.h"
 /*
  * This module should handle rendering etc, so first of all - we have to move everything related to rendering here
  */
@@ -55,6 +56,8 @@ void alignlasersWithPlayer(void);
 void alignlasersWithEnemy(void);
 
 static bool isBorderReached(E_Border borderType, int positionValue);
+
+static bool isEnemyHit = false;
 
 pthread_mutex_t shootingInfoMutx = {0};
 
@@ -160,13 +163,14 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     createEnemyLasers();
     EnemyAI_Init();
 
+    int enemyHitDissapearCyclesCnt = 0;
+
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
         ThreadSleep(1);
         SDL_RenderClear(mg_pRenderer);
         SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
-        SDL_RenderCopyEx(mg_pRenderer, mg_enemy[0].playerTexture, NULL,  &mg_enemy[0].playerHitbox, 180, NULL, SDL_FLIP_NONE);
         if (isShooting)
         {
             SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasRight);
@@ -178,15 +182,33 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
             alignlasersWithPlayer();
         }
 
-        if (isEnemyShooting)
+        if (!isEnemyHit)
         {
-            SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasRight, 180, NULL, SDL_FLIP_NONE);
-            SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasLeft, 180, NULL, SDL_FLIP_NONE);
-            manageEnemyLaserShots();
+            SDL_RenderCopyEx(mg_pRenderer, mg_enemy[0].playerTexture, NULL,  &mg_enemy[0].playerHitbox, 180, NULL, SDL_FLIP_NONE);
+            if (isEnemyShooting)
+            {
+                SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasRight, 180, NULL, SDL_FLIP_NONE);
+                SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasLeft, 180, NULL, SDL_FLIP_NONE);
+                manageEnemyLaserShots();
+            }
+            else
+            {
+                alignlasersWithEnemy();
+            }
         }
         else
         {
-            alignlasersWithEnemy();
+            if (++enemyHitDissapearCyclesCnt >= 2000)
+            {
+                isEnemyHit = false;
+                enemyHitDissapearCyclesCnt = 0;
+            }
+        }
+
+        if (Collision_isCollisionDetected(&mg_playerLasers.lasRight, &mg_enemy->playerHitbox) ||
+                Collision_isCollisionDetected(&mg_playerLasers.lasLeft, &mg_enemy->playerHitbox))
+        {
+            isEnemyHit = true;
         }
     }
 
