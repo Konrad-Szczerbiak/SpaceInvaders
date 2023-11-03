@@ -58,6 +58,7 @@ void alignlasersWithEnemy(void);
 static bool isBorderReached(E_Border borderType, int positionValue);
 
 static bool isEnemyHit = false;
+static bool isPlayerHit = false;
 
 pthread_mutex_t shootingInfoMutx = {0};
 
@@ -164,22 +165,35 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     EnemyAI_Init();
 
     int enemyHitDissapearCyclesCnt = 0;
+    int playerHitDissapearCyclesCnt = 0;
 
     while (1)
     {
         SDL_RenderPresent(mg_pRenderer);
         ThreadSleep(1);
         SDL_RenderClear(mg_pRenderer);
-        SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
-        if (isShooting)
+
+        if (!isPlayerHit)
         {
-            SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasRight);
-            SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasLeft);
-            manageLaserShots();
+            SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
+            if (isShooting)
+            {
+                SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasRight);
+                SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasLeft);
+                manageLaserShots();
+            }
+            else
+            {
+                alignlasersWithPlayer();
+            }
         }
         else
         {
-            alignlasersWithPlayer();
+            if (++playerHitDissapearCyclesCnt >= 2000)
+            {
+                isPlayerHit = false;
+                playerHitDissapearCyclesCnt = 0;
+            }
         }
 
         if (!isEnemyHit)
@@ -210,6 +224,13 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         {
             isEnemyHit = true;
         }
+
+        if (Collision_isCollisionDetected(&mg_enemyLasers.lasRight, &mg_playerHitbox) ||
+            Collision_isCollisionDetected(&mg_enemyLasers.lasLeft, &mg_playerHitbox))
+        {
+            isPlayerHit = true;
+        }
+
     }
 
 }
