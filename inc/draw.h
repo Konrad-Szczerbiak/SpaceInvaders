@@ -30,3 +30,4 @@ int MovePlayerUp(void);
 int MovePlayerDown(void);
 
 void setShootingtrue(void);
+void setEnemyShootingtrue(void);

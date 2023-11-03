@@ -31,9 +31,16 @@ void EnemyAI_Init(void)
 
 _Noreturn static void* EnemyAI_Task(void* arg)
 {
+    int loopsCnt = 0;
     T_ShipMovement* pMvmnt = (T_ShipMovement*)(arg);
     while(1)
     {
+        loopsCnt++;
+        if (loopsCnt >= 20)
+        {
+            setEnemyShootingtrue();
+            loopsCnt = 0;
+        }
         EnemyAI_MoveLeftToRight(pMvmnt);
         ThreadSleep(10);
     }

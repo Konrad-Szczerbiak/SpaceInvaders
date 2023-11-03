@@ -42,27 +42,43 @@ static SDL_Rect mg_playerHitbox = {0};
 static SDL_Rect mg_enemyHitbox = {0};
 
 static T_Laser mg_playerLasers = {0};
+static T_Laser mg_enemyLasers = {0};
 
 static T_Ship mg_players[1] = {0};
 static T_Ship mg_enemy[1] = {0};
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv);
 static void createPlayerLasers(void);
+static void createEnemyLasers(void);
 static void createPlayer(void);
 void alignlasersWithPlayer(void);
+void alignlasersWithEnemy(void);
 
 static bool isBorderReached(E_Border borderType, int positionValue);
 
+pthread_mutex_t shootingInfoMutx = {0};
+
 E_OpResult Draw_ModuleInit(void)
 {
-        pthread_create(&mg_drawThread, &mg_drawThreadAttr, &Draw_ThreadFunction, NULL);
+    pthread_mutex_init(&shootingInfoMutx, NULL);
+    pthread_create(&mg_drawThread, &mg_drawThreadAttr, &Draw_ThreadFunction, NULL);
 }
 
 static bool isShooting = false;
+static bool isEnemyShooting = false;
 
 void setShootingtrue(void)
 {
+    pthread_mutex_lock(&shootingInfoMutx);
     isShooting = true;
+    pthread_mutex_unlock(&shootingInfoMutx);
+}
+
+void setEnemyShootingtrue(void)
+{
+    pthread_mutex_lock(&shootingInfoMutx);
+    isEnemyShooting = true;
+    pthread_mutex_unlock(&shootingInfoMutx);
 }
 
 static void manageLaserShots(void)
@@ -73,6 +89,16 @@ static void manageLaserShots(void)
     {
         isShooting = false;
         alignlasersWithPlayer();
+    }
+}
+static void manageEnemyLaserShots(void)
+{
+    mg_enemyLasers.lasLeft.y += 1;
+    mg_enemyLasers.lasRight.y += 1;
+    if(isBorderReached(DownBorder, mg_enemyLasers.lasLeft.y) || isBorderReached(DownBorder, mg_enemyLasers.lasRight.y) )
+    {
+        isEnemyShooting = false;
+        alignlasersWithEnemy();
     }
 }
 
@@ -131,6 +157,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
     createPlayer();
     createPlayerLasers();
+    createEnemyLasers();
     EnemyAI_Init();
 
     while (1)
@@ -150,6 +177,17 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         {
             alignlasersWithPlayer();
         }
+
+        if (isEnemyShooting)
+        {
+            SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasRight, 180, NULL, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(mg_pRenderer, mg_enemyLasers.lasTexture, NULL,  &mg_enemyLasers.lasLeft, 180, NULL, SDL_FLIP_NONE);
+            manageEnemyLaserShots();
+        }
+        else
+        {
+            alignlasersWithEnemy();
+        }
     }
 
 }
@@ -159,6 +197,13 @@ void alignlasersWithPlayer(void)
     mg_playerLasers.lasLeft.x = mg_playerHitbox.x;
     mg_playerLasers.lasRight.x = mg_playerHitbox.x + mg_playerHitbox.w - mg_playerLasers.lasRight.w;
     mg_playerLasers.lasLeft.y = mg_playerLasers.lasRight.y = mg_playerHitbox.y;
+}
+
+void alignlasersWithEnemy(void)
+{
+    mg_enemyLasers.lasLeft.x = mg_enemy->playerHitbox.x;
+    mg_enemyLasers.lasRight.x = mg_enemy->playerHitbox.x + mg_enemy->playerHitbox.w - mg_enemyLasers.lasRight.w;
+    mg_enemyLasers.lasLeft.y = mg_enemyLasers.lasRight.y = mg_enemy->playerHitbox.y + mg_enemy->playerHitbox.h;
 }
 
 static void createPlayerLasers(void)
@@ -177,6 +222,28 @@ static void createPlayerLasers(void)
 
     mg_playerLasers.lasTexture = SDL_CreateTextureFromSurface(mg_pRenderer, laserTextureSrfc);
     if (NULL == mg_playerLasers.lasTexture)
+    {
+        assert(0);
+        exit(-1);
+    }
+}
+
+static void createEnemyLasers(void)
+{
+    mg_enemyLasers.lasLeft.w = mg_enemyLasers.lasRight.w = 5;
+    mg_enemyLasers.lasLeft.h = mg_enemyLasers.lasRight.h = 15;
+    alignlasersWithPlayer();
+
+    SDL_Surface* laserTextureSrfc = NULL;
+    laserTextureSrfc = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/LASER_BOLT.png");
+    if (NULL == laserTextureSrfc)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    mg_enemyLasers.lasTexture = SDL_CreateTextureFromSurface(mg_pRenderer, laserTextureSrfc);
+    if (NULL == mg_enemyLasers.lasTexture)
     {
         assert(0);
         exit(-1);
