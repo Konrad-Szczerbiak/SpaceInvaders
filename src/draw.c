@@ -189,6 +189,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         }
         else
         {
+            alignlasersWithPlayer();
             if (++playerHitDissapearCyclesCnt >= 2000)
             {
                 isPlayerHit = false;
@@ -212,6 +213,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         }
         else
         {
+            alignlasersWithEnemy();
             if (++enemyHitDissapearCyclesCnt >= 2000)
             {
                 isEnemyHit = false;

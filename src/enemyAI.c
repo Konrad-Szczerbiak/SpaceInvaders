@@ -6,6 +6,7 @@ typedef enum
 {
     eDirectionLeft,
     eDirectionRight,
+    eDirectionDown = 0x04,
 } E_MovementDirection;
 
 typedef struct {
@@ -17,7 +18,7 @@ static pthread_t mg_enemyAIthread = 0;
 
 T_ShipMovement mg_enemyMvmnt = {0};
 _Noreturn static void* EnemyAI_Task(void* arg);
-void EnemyAI_MoveLeftToRight(T_ShipMovement* pMvmnt);
+void EnemyAI_MoveLeftToRightThenStepDown(T_ShipMovement* pMvmnt);
 static bool leftBorderReached(T_Ship* pShip);
 static bool rightBorderReached(T_Ship* pShip);
 ////////////////////////////////////////////////////////////////////////
@@ -41,41 +42,63 @@ _Noreturn static void* EnemyAI_Task(void* arg)
             setEnemyShootingtrue();
             loopsCnt = 0;
         }
-        EnemyAI_MoveLeftToRight(pMvmnt);
+        EnemyAI_MoveLeftToRightThenStepDown(pMvmnt);
         ThreadSleep(10);
     }
 }
 
-void EnemyAI_MoveLeftToRight(T_ShipMovement* pMvmnt)
+void EnemyAI_MoveLeftToRightThenStepDown(T_ShipMovement* pMvmnt)
 {
+    static E_MovementDirection borderDirReached = 0xff;
+    static int initialY = 0;
     /*get borders*/
-    if (leftBorderReached(pMvmnt->ship))
+    if (leftBorderReached(pMvmnt->ship) && eDirectionLeft == pMvmnt->dir)
     {
-        pMvmnt->dir = eDirectionRight;
+        borderDirReached = eDirectionLeft;
+        initialY = pMvmnt->ship->playerHitbox.y;
+        pMvmnt->dir = eDirectionDown;
     }
-    else if (rightBorderReached(pMvmnt->ship))
+    else if (rightBorderReached(pMvmnt->ship) && eDirectionRight == pMvmnt->dir)
     {
-        pMvmnt->dir = eDirectionLeft;
+        borderDirReached = eDirectionRight;
+        initialY = pMvmnt->ship->playerHitbox.y;
+        pMvmnt->dir = eDirectionDown;
     }
+
+    if (pMvmnt->ship->playerHitbox.y - initialY >= pMvmnt->ship->playerHitbox.h)
+    {
+        if (borderDirReached ==  eDirectionLeft)
+        {
+            pMvmnt->dir = eDirectionRight;
+        }
+        else if (borderDirReached ==  eDirectionRight)
+        {
+            pMvmnt->dir = eDirectionLeft;
+        }
+    }
+
     switch (pMvmnt->dir)
     {
-        case eDirectionLeft:
+        case eDirectionRight:
             pMvmnt->ship->playerHitbox.x += 1;
             break;
-        case eDirectionRight:
+        case eDirectionLeft:
             pMvmnt->ship->playerHitbox.x -= 1;
+            break;
+        case eDirectionDown:
+            pMvmnt->ship->playerHitbox.y += 1;
             break;
         default:
             break;
     }
 }
 
-static bool leftBorderReached(T_Ship* pShip)
+static bool rightBorderReached(T_Ship* pShip)
 {
     return (pShip->playerHitbox.x >= pShip->mvmntBorder.w);
 }
 
-static bool rightBorderReached(T_Ship* pShip)
+static bool leftBorderReached(T_Ship* pShip)
 {
     return (pShip->playerHitbox.x <= pShip->mvmntBorder.x);
 }
