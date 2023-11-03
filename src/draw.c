@@ -140,10 +140,10 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         SDL_RenderClear(mg_pRenderer);
         SDL_RenderCopy(mg_pRenderer, mg_playerTexture, NULL, &mg_playerHitbox);
         SDL_RenderCopyEx(mg_pRenderer, mg_enemy[0].playerTexture, NULL,  &mg_enemy[0].playerHitbox, 180, NULL, SDL_FLIP_NONE);
-        SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasRight);
-        SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasLeft);
         if (isShooting)
         {
+            SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasRight);
+            SDL_RenderCopy(mg_pRenderer, mg_playerLasers.lasTexture, NULL,  &mg_playerLasers.lasLeft);
             manageLaserShots();
         }
         else
