@@ -1,92 +1,96 @@
 #include "utilities.h"
 #include "enemyAI.h"
-#include "draw.h"
+#include "commonShip.h"
+//
+//typedef enum
+//{
+//    eDirectionLeft,
+//    eDirectionRight,
+//    eDirectionDown = 0x04,
+//} E_MovementDirection;
 
-typedef enum
-{
-    eDirectionLeft,
-    eDirectionRight,
-    eDirectionDown = 0x04,
-} E_MovementDirection;
-
-typedef struct {
-    T_Ship* ship;
-    E_MovementDirection dir;
-} T_ShipMovement;
+//typedef struct {
+//    T_Ship* ship;
+//    E_MovementDirection dir;
+//} T_ShipMovement;
 
 static pthread_t mg_enemyAIthread = 0;
 
-T_ShipMovement mg_enemyMvmnt = {0};
+//T_ShipMovement mg_enemyMvmnt = {0};
 _Noreturn static void* EnemyAI_Task(void* arg);
-void EnemyAI_MoveLeftToRightThenStepDown(T_ShipMovement* pMvmnt);
+void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip);
 static bool leftBorderReached(T_Ship* pShip);
 static bool rightBorderReached(T_Ship* pShip);
 ////////////////////////////////////////////////////////////////////////
 void EnemyAI_Init(void)
 {
-    Draw_CreateEnemy(20, 20);
-
-    mg_enemyMvmnt.ship = getEnemyPtr();
-    pthread_create(&mg_enemyAIthread, NULL, EnemyAI_Task, &mg_enemyMvmnt);
+    pthread_create(&mg_enemyAIthread, NULL, EnemyAI_Task, NULL);
 }
 
 _Noreturn static void* EnemyAI_Task(void* arg)
 {
+    T_ShipsList* pEnemyList = NULL;
+    pEnemyList = CommonShip_GetShipListPtr(eEnemyShip);
     int loopsCnt = 0;
-    T_ShipMovement* pMvmnt = (T_ShipMovement*)(arg);
     while(1)
     {
         loopsCnt++;
-        if (loopsCnt >= 20)
+        if (loopsCnt >= 4000)
         {
-            setEnemyShootingtrue();
+            if (pEnemyList->count < 10)
+            {
+                CommonShip_CreateShip(eEnemyShip, 0, 0);
+            }
+            else
+            {
+                CommonShip_DeleteShip(eEnemyShip, pEnemyList->head->ship);
+            }
+            //            setEnemyShootingtrue();
             loopsCnt = 0;
         }
-        EnemyAI_MoveLeftToRightThenStepDown(pMvmnt);
-        ThreadSleep(10);
+        ShipList_PerformForEach(pEnemyList, EnemyAI_MoveLeftToRightThenStepDown);
+        ThreadSleep(1);
     }
 }
 
-void EnemyAI_MoveLeftToRightThenStepDown(T_ShipMovement* pMvmnt)
+void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip)
 {
-    static E_MovementDirection borderDirReached = 0xff;
-    static int initialY = 0;
     /*get borders*/
-    if (leftBorderReached(pMvmnt->ship) && eDirectionLeft == pMvmnt->dir)
+    if (leftBorderReached(pShip) && eDirectionLeft == pShip->mvmntDir)
     {
-        borderDirReached = eDirectionLeft;
-        initialY = pMvmnt->ship->playerHitbox.y;
-        pMvmnt->dir = eDirectionDown;
+        pShip->borderDirReached = eDirectionLeft;
+        pShip->initialY = pShip->shipHitbox.y;
+        pShip->mvmntDir = eDirectionDown;
     }
-    else if (rightBorderReached(pMvmnt->ship) && eDirectionRight == pMvmnt->dir)
+    else if (rightBorderReached(pShip) && eDirectionRight == pShip->mvmntDir)
     {
-        borderDirReached = eDirectionRight;
-        initialY = pMvmnt->ship->playerHitbox.y;
-        pMvmnt->dir = eDirectionDown;
-    }
-
-    if (pMvmnt->ship->playerHitbox.y - initialY >= pMvmnt->ship->playerHitbox.h)
-    {
-        if (borderDirReached ==  eDirectionLeft)
-        {
-            pMvmnt->dir = eDirectionRight;
-        }
-        else if (borderDirReached ==  eDirectionRight)
-        {
-            pMvmnt->dir = eDirectionLeft;
-        }
+        pShip->borderDirReached = eDirectionRight;
+        pShip->initialY = pShip->shipHitbox.y;
+        pShip->mvmntDir = eDirectionDown;
     }
 
-    switch (pMvmnt->dir)
+    if (pShip->shipHitbox.y - pShip->initialY >= pShip->shipHitbox.h)
+    {
+        if (pShip->borderDirReached ==  eDirectionLeft)
+        {
+            pShip->mvmntDir = eDirectionRight;
+        }
+        else if (pShip->borderDirReached ==  eDirectionRight)
+        {
+            pShip->mvmntDir = eDirectionLeft;
+        }
+    }
+
+    switch (pShip->mvmntDir)
     {
         case eDirectionRight:
-            pMvmnt->ship->playerHitbox.x += 1;
+            pShip->shipHitbox.x += 1;
             break;
         case eDirectionLeft:
-            pMvmnt->ship->playerHitbox.x -= 1;
+            pShip->shipHitbox.x -= 1;
             break;
         case eDirectionDown:
-            pMvmnt->ship->playerHitbox.y += 1;
+            pShip->shipHitbox.y += 1;
             break;
         default:
             break;
@@ -95,10 +99,10 @@ void EnemyAI_MoveLeftToRightThenStepDown(T_ShipMovement* pMvmnt)
 
 static bool rightBorderReached(T_Ship* pShip)
 {
-    return (pShip->playerHitbox.x >= pShip->mvmntBorder.w);
+    return (pShip->shipHitbox.x >= pShip->mvmntBorder.w);
 }
 
 static bool leftBorderReached(T_Ship* pShip)
 {
-    return (pShip->playerHitbox.x <= pShip->mvmntBorder.x);
+    return (pShip->shipHitbox.x <= pShip->mvmntBorder.x);
 }

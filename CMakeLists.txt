@@ -15,13 +15,12 @@ add_executable(SpaceInvaders
         src/SDL_Init.c
         src/inputs.c
         src/draw.c
-        src/collison.c
         src/entities.c
         src/enemies.c
         src/utilities.c
         src/player.c
         src/enemyAI.c
-        src/collision.c)
+        src/collision.c src/commonShip.c inc/commonShip.h)
 
 add_library(SDL_Image STATIC IMPORTED inc/entities.h inc/utilities.h)
 set_target_properties(SDL_Image PROPERTIES IMPORTED_LOCATION /usr/local/lib/libSDL2_image.a)

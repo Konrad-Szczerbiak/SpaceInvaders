@@ -7,24 +7,6 @@
 
 #define WITHIN_BOUNDARIES(loThld, val, hiThld) (((loThld) <= (val)) && ((hiThld) >= (val)))
 
-
-static pthread_t mg_collisonThread = 0;
-_Noreturn static void* collisionThread(void* arg0);
-
-void Collision_InitModule(void)
-{
-    pthread_create(&mg_collisonThread, NULL, collisionThread, NULL);
-}
-
-
-_Noreturn static void* collisionThread(void* arg0)
-{
-    while(1)
-    {
-        ThreadSleep(1);
-    }
-}
-
 /*simple collision detection mechanism*/
 bool Collision_isCollisionDetected(SDL_Rect* hitboxRect1, SDL_Rect* hitboxRect2)
 {
