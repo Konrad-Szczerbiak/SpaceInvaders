@@ -3,6 +3,7 @@
 #include "draw.h"
 #include "enemyAI.h"
 #include "collision.h"
+#include "commonShip.h"
 /*
  * This module should handle rendering etc, so first of all - we have to move everything related to rendering here
  */
@@ -108,7 +109,6 @@ static void manageEnemyLaserShots(void)
 
 _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 {
-    /*Get display mode*/
     if (0 != SDL_GetDesktopDisplayMode(0, &mg_screenDisplayMode))
     {
         assert(0);
@@ -166,6 +166,8 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
 
     int enemyHitDissapearCyclesCnt = 0;
     int playerHitDissapearCyclesCnt = 0;
+
+    CommonShip_InitModule(NULL);
 
     while (1)
     {
