@@ -4,4 +4,10 @@
 
 #pragma once
 
-void CommonShip_InitModule(void* pScreenInfo);
+typedef enum {
+    ePlayerShip,
+    eEnemyShip,
+    eShipTypesCnt
+} E_ShipType;
+
+void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo);

@@ -3,6 +3,7 @@
 //
 
 #include "utilities.h"
+#include "SDL2/SDL_image.h"
 #include "commonShip.h"
 
 typedef struct {
@@ -14,7 +15,7 @@ typedef struct {
 typedef struct {
     SDL_Rect mvmntBorder;
     SDL_Texture* playerTexture;
-    SDL_Rect playerHitbox;
+    SDL_Rect shipHitbox;
     T_Laser lasers;
 } T_Ship;
 
@@ -31,6 +32,15 @@ typedef struct {
 } T_ShipsList;
 
 static T_ShipsList mg_Enemies = {0};
+
+typedef struct {
+    SDL_Surface* pGfxSurface;
+    SDL_Texture* pGfxTexture;
+} T_GfhHandle;
+
+T_GfhHandle mg_TexturesMap[eShipTypesCnt] = {0};
+
+static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_ShipType type);
 
 void ShipsList_PushBack(T_ShipsList* pList, T_Ship* pNewElem)
 {
@@ -63,7 +73,14 @@ void ShipsList_PopBack(T_ShipsList* pList)
     pList->count--;
 }
 
-T_Ship* commonShip_CreateShip()
+T_Ship* commonShip_CreateShip(E_ShipType shipType)
+{
+    /*Zaczniemy od generowania statków w lewym górnym rogu ekranu*/
+    T_Ship* new = calloc(1, sizeof(T_Ship));
+
+
+
+}
 
 /*currently used display representation as a rectangle*/
 static SDL_Rect mg_windowDimension = {0};
@@ -82,7 +99,56 @@ struct S_ShipInterface
  * Ma zawierać - ogólną strukturę statku - jest już
  * informacje na temat statków tylko i wyłącznie
  * Interfejs do poruszania statkami*/
-void CommonShip_InitModule(void* pScreenInfo)
+void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo)
 {
+    mg_TexturesMap[ePlayerShip] = getGfxStruct(pRenderer, ePlayerShip);
+    mg_TexturesMap[eEnemyShip] = getGfxStruct(pRenderer, eEnemyShip);
+
+
+}
+
+static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_ShipType type)
+{
+    T_GfhHandle ret;
+
+    switch (type)
+    {
+        case ePlayerShip:
+            ret.pGfxSurface = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/DETAILED_PLAYER.png");
+            break;
+        case eEnemyShip:
+            ret.pGfxSurface = IMG_Load("/home/szczerbiakko/SpaceInvaders/SpaceInvaders/gfx/ENEMY.png");
+            break;
+        default:
+            assert(0);
+            exit(-1);
+    }
+    if (NULL == ret.pGfxSurface)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    ret.pGfxTexture = SDL_CreateTextureFromSurface(pRenderer, ret.pGfxSurface);
+    if (NULL == ret.pGfxTexture)
+    {
+        assert(0);
+        exit(-1);
+    }
+
+    return ret;
+}
+
+static T_Ship* createShip(E_ShipType type)
+{
+    mg_enemy[0].shipHitbox.h = mg_windowDisplayMode.h / 10;
+    mg_enemy[0].shipHitbox.w = mg_windowDisplayMode.w / 20;
+    mg_enemy[0].shipHitbox.x = x;
+    mg_enemy[0].shipHitbox.y = y;
+
+    mg_enemy[0].mvmntBorder.x = mg_windowPosition.x;
+    mg_enemy[0].mvmntBorder.y = mg_windowPosition.y;
+    mg_enemy[0].mvmntBorder.w = mg_windowPosition.w - mg_enemy[0].shipHitbox.w;
+    mg_enemy[0].mvmntBorder.h = mg_windowPosition.h - mg_enemy[0].shipHitbox.h;
 
 }
