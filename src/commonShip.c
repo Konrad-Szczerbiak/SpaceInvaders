@@ -38,9 +38,14 @@ typedef struct {
     SDL_Texture* pGfxTexture;
 } T_GfhHandle;
 
-T_GfhHandle mg_TexturesMap[eShipTypesCnt] = {0};
+static T_GfhHandle mg_TexturesMap[eShipTypesCnt] = {0};
 
+/*currently used display representation as a rectangle*/
+static SDL_Rect mg_windowDimension = {0};
+
+/*STATIC FUNCS*/
 static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_ShipType type);
+static T_Ship* createShip(E_ShipType type, int xPos, int yPos);
 
 void ShipsList_PushBack(T_ShipsList* pList, T_Ship* pNewElem)
 {
@@ -82,8 +87,6 @@ T_Ship* commonShip_CreateShip(E_ShipType shipType)
 
 }
 
-/*currently used display representation as a rectangle*/
-static SDL_Rect mg_windowDimension = {0};
 
 struct S_ShipInterface
 {
@@ -99,11 +102,18 @@ struct S_ShipInterface
  * Ma zawierać - ogólną strukturę statku - jest już
  * informacje na temat statków tylko i wyłącznie
  * Interfejs do poruszania statkami*/
-void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo)
+void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo, SDL_Rect* pWindowBorders);
+void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo, SDL_Rect* pWindowBorders)
 {
     mg_TexturesMap[ePlayerShip] = getGfxStruct(pRenderer, ePlayerShip);
     mg_TexturesMap[eEnemyShip] = getGfxStruct(pRenderer, eEnemyShip);
 
+    memcpy(&mg_windowDimension, pWindowBorders, sizeof(SDL_Rect));
+
+    createShip(eEnemyShip, 0, 0);
+    createShip(eEnemyShip, 5, 10);
+    createShip(eEnemyShip, 34, 21);
+    createShip(eEnemyShip, 65, 25);
 
 }
 
@@ -139,20 +149,19 @@ static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_ShipType type)
     return ret;
 }
 
-static T_Ship* createShip(E_ShipType type)
+static T_Ship* createShip(E_ShipType type, int xPos, int yPos)
 {
     T_Ship* new = calloc(1, sizeof(T_Ship));
 
-    /*TODO*/
-//    new->shipHitbox.h = mg_windowDisplayMode.h / 10;
-//    new->shipHitbox.w = mg_windowDisplayMode.w / 20;
-//    new->shipHitbox.x = x;
-//    new->shipHitbox.y = y;
-//
-//    new->mvmntBorder.x = mg_windowPosition.x;
-//    new->mvmntBorder.y = mg_windowPosition.y;
-//    new->mvmntBorder.w = mg_windowPosition.w - new->shipHitbox.w;
-//    new->mvmntBorder.h = mg_windowPosition.h - new->shipHitbox.h;
+    new->shipHitbox.h = mg_windowDimension.h / 10;
+    new->shipHitbox.w = mg_windowDimension.w / 20;
+    new->shipHitbox.x = xPos;
+    new->shipHitbox.y = yPos;
+
+    new->mvmntBorder.x = mg_windowDimension.x;
+    new->mvmntBorder.y = mg_windowDimension.y;
+    new->mvmntBorder.w = mg_windowDimension.w - new->shipHitbox.w;
+    new->mvmntBorder.h = mg_windowDimension.h - new->shipHitbox.h;
 
     ShipsList_PushBack(&mg_Enemies, new);
 }

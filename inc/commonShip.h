@@ -10,4 +10,4 @@ typedef enum {
     eShipTypesCnt
 } E_ShipType;
 
-void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo);
+void CommonShip_InitModule(SDL_Renderer* pRenderer, void* pScreenInfo, SDL_Rect* pWindowBorders);

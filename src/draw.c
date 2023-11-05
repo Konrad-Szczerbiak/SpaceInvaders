@@ -167,7 +167,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     int enemyHitDissapearCyclesCnt = 0;
     int playerHitDissapearCyclesCnt = 0;
 
-    CommonShip_InitModule(mg_pRenderer, NULL);
+    CommonShip_InitModule(mg_pRenderer, NULL, &mg_windowPosition);
 
     while (1)
     {
