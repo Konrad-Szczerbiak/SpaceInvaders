@@ -141,14 +141,18 @@ static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_ShipType type)
 
 static T_Ship* createShip(E_ShipType type)
 {
-    mg_enemy[0].shipHitbox.h = mg_windowDisplayMode.h / 10;
-    mg_enemy[0].shipHitbox.w = mg_windowDisplayMode.w / 20;
-    mg_enemy[0].shipHitbox.x = x;
-    mg_enemy[0].shipHitbox.y = y;
+    T_Ship* new = calloc(1, sizeof(T_Ship));
 
-    mg_enemy[0].mvmntBorder.x = mg_windowPosition.x;
-    mg_enemy[0].mvmntBorder.y = mg_windowPosition.y;
-    mg_enemy[0].mvmntBorder.w = mg_windowPosition.w - mg_enemy[0].shipHitbox.w;
-    mg_enemy[0].mvmntBorder.h = mg_windowPosition.h - mg_enemy[0].shipHitbox.h;
+    /*TODO*/
+//    new->shipHitbox.h = mg_windowDisplayMode.h / 10;
+//    new->shipHitbox.w = mg_windowDisplayMode.w / 20;
+//    new->shipHitbox.x = x;
+//    new->shipHitbox.y = y;
+//
+//    new->mvmntBorder.x = mg_windowPosition.x;
+//    new->mvmntBorder.y = mg_windowPosition.y;
+//    new->mvmntBorder.w = mg_windowPosition.w - new->shipHitbox.w;
+//    new->mvmntBorder.h = mg_windowPosition.h - new->shipHitbox.h;
 
+    ShipsList_PushBack(&mg_Enemies, new);
 }
