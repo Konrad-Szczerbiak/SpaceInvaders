@@ -32,6 +32,7 @@ typedef struct {
     double renderAngle;
     int initialY;
     E_MovementDirection mvmntDir;
+    E_MovementDirection borderDirReached;
 } T_Ship;
 
 typedef struct S_ShipsListElement{

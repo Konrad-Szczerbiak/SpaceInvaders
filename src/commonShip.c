@@ -187,6 +187,7 @@ T_Ship* CommonShip_CreateShip(E_ShipType type, int xPos, int yPos)
     new->shipTexture = mg_Graphics[eEnemyShip == type ? eGfxEnemy : eGfxPlayer].pGfxTexture;
 
     new->renderAngle = eEnemyShip == type ? 180.F : .0F;
+    new->borderDirReached = 0xff;
 
     createLasersForShip(new);
 

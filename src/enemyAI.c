@@ -35,7 +35,7 @@ _Noreturn static void* EnemyAI_Task(void* arg)
     while(1)
     {
         loopsCnt++;
-        if (loopsCnt >= 1000)
+        if (loopsCnt >= 4000)
         {
             if (pEnemyList->count < 10)
             {
@@ -55,28 +55,27 @@ _Noreturn static void* EnemyAI_Task(void* arg)
 
 void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip)
 {
-    static E_MovementDirection borderDirReached = 0xff;
     /*get borders*/
     if (leftBorderReached(pShip) && eDirectionLeft == pShip->mvmntDir)
     {
-        borderDirReached = eDirectionLeft;
+        pShip->borderDirReached = eDirectionLeft;
         pShip->initialY = pShip->shipHitbox.y;
         pShip->mvmntDir = eDirectionDown;
     }
     else if (rightBorderReached(pShip) && eDirectionRight == pShip->mvmntDir)
     {
-        borderDirReached = eDirectionRight;
+        pShip->borderDirReached = eDirectionRight;
         pShip->initialY = pShip->shipHitbox.y;
         pShip->mvmntDir = eDirectionDown;
     }
 
     if (pShip->shipHitbox.y - pShip->initialY >= pShip->shipHitbox.h)
     {
-        if (borderDirReached ==  eDirectionLeft)
+        if (pShip->borderDirReached ==  eDirectionLeft)
         {
             pShip->mvmntDir = eDirectionRight;
         }
-        else if (borderDirReached ==  eDirectionRight)
+        else if (pShip->borderDirReached ==  eDirectionRight)
         {
             pShip->mvmntDir = eDirectionLeft;
         }
