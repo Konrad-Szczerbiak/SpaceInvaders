@@ -4,25 +4,31 @@
  * */
 #include "utilities.h"
 
-typedef struct {
-    SDL_Texture* lasTexture;
-    SDL_Rect lasLeft;
-    SDL_Rect lasRight;
-} T_Laser;
+//typedef struct {
+//    SDL_Texture* lasTexture;
+//    SDL_Rect lasLeft;
+//    SDL_Rect lasRight;
+//} T_Laser;
+//
+//typedef struct {
+//    SDL_Rect mvmntBorder;
+//    SDL_Texture* playerTexture;
+//    SDL_Rect playerHitbox;
+//    T_Laser lasers;
+//} T_Ship;
 
-typedef struct {
-    SDL_Rect mvmntBorder;
-    SDL_Texture* playerTexture;
-    SDL_Rect playerHitbox;
-    T_Laser lasers;
-} T_Ship;
+typedef enum {
+    UpBorder,
+    LeftBorder,
+    DownBorder,
+    RightBorder,
+} E_Border;
 
 
  E_OpResult Draw_ModuleInit(void);
 
- T_Ship* getEnemyPtr(void);
-
-void Draw_CreateEnemy(int x, int y);
+SDL_Renderer* Draw_GetRendererPtr(void);
+bool Draw_isMvmntBorderReached(E_Border borderType, int positionValue);
 
 int MovePlayerLeft(void);
 int MovePlayerRight(void);

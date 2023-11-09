@@ -15,7 +15,6 @@ add_executable(SpaceInvaders
         src/SDL_Init.c
         src/inputs.c
         src/draw.c
-        src/collison.c
         src/entities.c
         src/enemies.c
         src/utilities.c
