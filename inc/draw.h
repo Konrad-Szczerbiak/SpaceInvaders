@@ -3,20 +3,6 @@
  * It also performs drawing operations, and operations on renderer
  * */
 #include "utilities.h"
-
-//typedef struct {
-//    SDL_Texture* lasTexture;
-//    SDL_Rect lasLeft;
-//    SDL_Rect lasRight;
-//} T_Laser;
-//
-//typedef struct {
-//    SDL_Rect mvmntBorder;
-//    SDL_Texture* playerTexture;
-//    SDL_Rect playerHitbox;
-//    T_Laser lasers;
-//} T_Ship;
-
 typedef enum {
     UpBorder,
     LeftBorder,

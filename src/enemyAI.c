@@ -1,27 +1,14 @@
 #include "utilities.h"
 #include "enemyAI.h"
 #include "commonShip.h"
-//
-//typedef enum
-//{
-//    eDirectionLeft,
-//    eDirectionRight,
-//    eDirectionDown = 0x04,
-//} E_MovementDirection;
-
-//typedef struct {
-//    T_Ship* ship;
-//    E_MovementDirection dir;
-//} T_ShipMovement;
 
 static pthread_t mg_enemyAIthread = 0;
 
-//T_ShipMovement mg_enemyMvmnt = {0};
 _Noreturn static void* EnemyAI_Task(void* arg);
 void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip);
 static bool leftBorderReached(T_Ship* pShip);
 static bool rightBorderReached(T_Ship* pShip);
-////////////////////////////////////////////////////////////////////////
+
 void EnemyAI_Init(void)
 {
     pthread_create(&mg_enemyAIthread, NULL, EnemyAI_Task, NULL);
@@ -35,7 +22,7 @@ _Noreturn static void* EnemyAI_Task(void* arg)
     while(1)
     {
         loopsCnt++;
-        if (loopsCnt >= 4000)
+        if (loopsCnt >= 200)
         {
             if (pEnemyList->count < 10)
             {
