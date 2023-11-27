@@ -7,6 +7,8 @@
 #include "commonShip.h"
 #include "draw.h"
 
+#define DEFAULT_SHIP_SPEED 1
+
 typedef enum {
     eGfxPlayer,
     eGfxEnemy,
@@ -37,7 +39,24 @@ static void deleteShip(E_ShipType type, T_Ship* pShip);
 static T_GfhHandle getGfxStruct(SDL_Renderer* pRenderer, E_GfxTypes gfxType);
 /*STATIC FUNCS*/
 
-int ShipList_GetElementIndexByShipPtr(T_ShipsList * pList, T_Ship* pShip)
+const T_Ship* ShipList_GetElementShipPtrByIndex(const T_ShipsList * const pList, int index)
+{
+    if (index >= pList->count)
+    {
+        assert(0);
+        return NULL;
+    }
+    const bool startFromTail = (2*index > pList->count);
+    startFromTail && (index = (pList->count-1) - index);
+    T_ShipsListElement* pRet = startFromTail ? pList->tail : pList->head;
+    while (index--)
+    {
+        pRet = startFromTail ? pRet->pPrev : pRet->pNext;
+    }
+    return pRet->ship;
+}
+
+int ShipList_GetElementIndexByShipPtr(const T_ShipsList * const pList, const T_Ship* const pShip)
 {
     int index = 0;
     for (T_ShipsListElement* elem = pList->head; elem != NULL; elem = elem->pNext)
@@ -189,6 +208,8 @@ T_Ship* CommonShip_CreateShip(E_ShipType type, int xPos, int yPos)
     new->renderAngle = eEnemyShip == type ? 180.F : .0F;
     new->borderDirReached = 0xff;
 
+    new->speed = DEFAULT_SHIP_SPEED;
+
     createLasersForShip(new);
 
     ShipsList_PushBack(&mg_shipList[type], new);
@@ -204,7 +225,7 @@ static void manageShipLaserShots(T_Ship* pShip)
 {
     pShip->lasers.lasLeft.y += 1;
     pShip->lasers.lasRight.y += 1;
-    if(Draw_isMvmntBorderReached(DownBorder, pShip->lasers.lasLeft.y) || Draw_isMvmntBorderReached(DownBorder, pShip->lasers.lasRight.y) )
+    if(CommonShip_isMvmntBorderReached(&pShip->lasers.lasLeft, DownBorder) || CommonShip_isMvmntBorderReached(&pShip->lasers.lasRight, DownBorder) )
     {
         pShip->isShooting = false;
         alignLaserWithShip(pShip);
@@ -216,7 +237,7 @@ void CommonShip_RenderShip(T_Ship* pShip)
     SDL_Renderer* pRenderer = Draw_GetRendererPtr();
     if (false == pShip->isHit)
     {
-        SDL_RenderCopyEx(pRenderer, pShip->shipTexture, NULL,  &pShip->shipHitbox, 180, NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(pRenderer, pShip->shipTexture, NULL,  &pShip->shipHitbox, pShip->renderAngle, NULL, SDL_FLIP_NONE);
         if (pShip->isShooting)
         {
             SDL_RenderCopyEx(pRenderer, pShip->lasers.lasTexture, NULL,  &pShip->lasers.lasRight, pShip->renderAngle, NULL, SDL_FLIP_NONE);
@@ -256,3 +277,57 @@ T_ShipsList* CommonShip_GetShipListPtr(E_ShipType type)
 {
     return &mg_shipList[type];
 }
+
+void CommonShip_SetShipShootingFlag(T_Ship* pShip)
+{
+    pShip->isShooting = true;
+}
+
+void CommonShip_ClearShipShootingFlag(T_Ship* pShip)
+{
+    pShip->isShooting = false;
+}
+
+bool CommonShip_isMvmntBorderReached(SDL_Rect* pHitbox, E_Border borderType)
+{
+    switch (borderType) {
+        case UpBorder:
+            return (pHitbox->y <= mg_windowDimension.y);
+        case DownBorder:
+            return (pHitbox->y >= mg_windowDimension.y + mg_windowDimension.h);
+        case LeftBorder:
+            return (pHitbox->x <= mg_windowDimension.x);
+        case RightBorder:
+            return (pHitbox->x >= mg_windowDimension.x + mg_windowDimension.w);
+        default:
+            return false;
+    }
+}
+
+void CommonShip_Move(E_MovementDirection dir, T_Ship* pShip)
+{
+    int* actCoordinate = NULL;
+    int step = 0;
+    switch (dir)
+    {
+        case eDirectionRight: actCoordinate = &pShip->shipHitbox.x; step = (+1); break;
+        case eDirectionLeft: actCoordinate = &pShip->shipHitbox.x; step = (-1); break;
+        case eDirectionDown: actCoordinate = &pShip->shipHitbox.y; step = (+1); break;
+        case eDirectionUp: actCoordinate = &pShip->shipHitbox.y; step = (-1); break;
+        default:
+            assert(0);
+            return;
+    }
+    *actCoordinate+=(pShip->speed)*step;
+}
+
+void CommonShip_MovePlayer(E_MovementDirection dir, int playerNr)
+{
+    T_Ship* pPlayerShip = ShipList_GetElementShipPtrByIndex(&mg_shipList[ePlayerShip], --playerNr);
+    CommonShip_Move(dir, pPlayerShip);
+}
+
+
+/*okej - jak zarejestrować kolizję pomiędzy dwoma elementami? A dokładniej - pomiędzy laserami gracza a którymś ze statków?*/
+/*mógłbym, na przykład: sprawdzać każdy element listy w osobnym watku, uruchamianym semaforem gdy gracz wystrzeli.*/
+

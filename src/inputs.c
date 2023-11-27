@@ -5,6 +5,7 @@
 
 #include "utilities.h"
 #include "draw.h"
+#include "commonShip.h"
 
 static SDL_Event Event = {0}; /*General Event Structure*/
 static SDL_KeyboardEvent KeyboardEvent = {0};
@@ -21,7 +22,9 @@ void Inputs_ModuleInit(void)
 
 _Noreturn static T_ThreadFunc InputsTask(void* arg)
 {
-    ThreadSleep(100); /*Allow for initial events pumping*/
+    ThreadSleep(1); /*Allow for initial events pumping*/
+    E_MovementDirection direction;
+    int playerNr =0;
     while(1)
     {
         while (SDL_PollEvent(&Event) > 0)
@@ -32,22 +35,24 @@ _Noreturn static T_ThreadFunc InputsTask(void* arg)
                 switch (KeyboardEvent.keysym.sym)
                 {
                     case SDLK_RIGHT:
-                        MovePlayerRight();
-                        SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                        direction = eDirectionRight;
+                        playerNr = 1;
                         break;
                     case SDLK_LEFT:
-                        MovePlayerLeft();
-                        SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                        direction = eDirectionLeft;
+                        playerNr = 1;
                         break;
                     case SDLK_DOWN:
-                        MovePlayerDown();
-                        SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                        direction = eDirectionDown;
+                        playerNr = 1;
                         break;
                     case SDLK_UP:
-                        MovePlayerUp();
-                        SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                        direction = eDirectionUp;
+                        playerNr = 1;
                         break;
                 }
+                SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); /*Flush the rest of events*/
+                CommonShip_MovePlayer(direction, playerNr);
             }
             else if (SDL_MOUSEBUTTONDOWN == Event.type)
             {

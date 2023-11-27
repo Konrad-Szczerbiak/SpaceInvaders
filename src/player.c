@@ -1,6 +1,15 @@
 #include "player.h"
 
 
+T_ShipsList mg_playersList = {0};
 
-//static SDL_Rect mg_playerHitbox = {0};
+void Player_InitModule(void)
+{
 
+}
+
+
+void Player_SetPlayerShootingFlag(int playerNumber)
+{
+
+}

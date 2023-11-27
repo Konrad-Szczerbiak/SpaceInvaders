@@ -100,6 +100,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
     EnemyAI_Init();
 
     CommonShip_InitModule(mg_pRenderer, NULL, &mg_windowPosition);
+    CommonShip_CreateShip(ePlayerShip, mg_windowDisplayMode.w/2, mg_windowDisplayMode.h/2);
 
     while (1)
     {
@@ -108,6 +109,7 @@ _Noreturn static T_ThreadFunc Draw_ThreadFunction(void* argv)
         SDL_RenderClear(mg_pRenderer);
 
         ShipList_PerformForEach(CommonShip_GetShipListPtr(eEnemyShip), CommonShip_RenderShip);
+        ShipList_PerformForEach(CommonShip_GetShipListPtr(ePlayerShip), CommonShip_RenderShip);
     }
 
 }
@@ -137,56 +139,6 @@ static void createPlayer(void)
     {
         assert(0);
         exit(-1);
-    }
-}
-
-#define PLAYER_SHIP_SPEED 10
-
-int MovePlayerLeft(void)
-{
-    if (Draw_isMvmntBorderReached(LeftBorder, mg_playerHitbox.x-=PLAYER_SHIP_SPEED))
-    {
-        mg_playerHitbox.x = mg_PlayerMovementBorder.x;
-    }
-}
-
-int MovePlayerRight(void)
-{
-    if (Draw_isMvmntBorderReached(RightBorder, mg_playerHitbox.x+=PLAYER_SHIP_SPEED))
-    {
-        mg_playerHitbox.x = mg_PlayerMovementBorder.x + mg_PlayerMovementBorder.w;
-    }
-}
-
-int MovePlayerUp(void)
-{
-    if (Draw_isMvmntBorderReached(UpBorder, mg_playerHitbox.y-=PLAYER_SHIP_SPEED))
-    {
-        mg_playerHitbox.y = mg_PlayerMovementBorder.y;
-    }
-}
-
-int MovePlayerDown(void)
-{
-    if (Draw_isMvmntBorderReached(DownBorder, mg_playerHitbox.y+=PLAYER_SHIP_SPEED))
-    {
-        mg_playerHitbox.y = mg_PlayerMovementBorder.y + mg_PlayerMovementBorder.h;
-    }
-}
-
-bool Draw_isMvmntBorderReached(E_Border borderType, int positionValue)
-{
-    switch (borderType) {
-        case UpBorder:
-            return (positionValue <= mg_windowPosition.y);
-        case DownBorder:
-            return (positionValue >= mg_windowPosition.y + mg_windowPosition.h);
-        case LeftBorder:
-            return (positionValue <= mg_windowPosition.x);
-        case RightBorder:
-            return (positionValue >= mg_windowPosition.x + mg_windowPosition.w);
-        default:
-            return false;
     }
 }
 

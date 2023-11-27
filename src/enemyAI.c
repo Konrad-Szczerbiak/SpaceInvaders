@@ -24,7 +24,7 @@ _Noreturn static void* EnemyAI_Task(void* arg)
         loopsCnt++;
         if (loopsCnt >= 200)
         {
-            if (pEnemyList->count < 10)
+            if (pEnemyList->count < 15)
             {
                 CommonShip_CreateShip(eEnemyShip, 0, 0);
             }
@@ -43,13 +43,13 @@ _Noreturn static void* EnemyAI_Task(void* arg)
 void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip)
 {
     /*get borders*/
-    if (leftBorderReached(pShip) && eDirectionLeft == pShip->mvmntDir)
+    if (CommonShip_isMvmntBorderReached(&pShip->shipHitbox, LeftBorder) && eDirectionLeft == pShip->mvmntDir)
     {
         pShip->borderDirReached = eDirectionLeft;
         pShip->initialY = pShip->shipHitbox.y;
         pShip->mvmntDir = eDirectionDown;
     }
-    else if (rightBorderReached(pShip) && eDirectionRight == pShip->mvmntDir)
+    else if (CommonShip_isMvmntBorderReached(&pShip->shipHitbox, RightBorder) && eDirectionRight == pShip->mvmntDir)
     {
         pShip->borderDirReached = eDirectionRight;
         pShip->initialY = pShip->shipHitbox.y;
@@ -67,29 +67,5 @@ void EnemyAI_MoveLeftToRightThenStepDown(T_Ship* pShip)
             pShip->mvmntDir = eDirectionLeft;
         }
     }
-
-    switch (pShip->mvmntDir)
-    {
-        case eDirectionRight:
-            pShip->shipHitbox.x += 1;
-            break;
-        case eDirectionLeft:
-            pShip->shipHitbox.x -= 1;
-            break;
-        case eDirectionDown:
-            pShip->shipHitbox.y += 1;
-            break;
-        default:
-            break;
-    }
-}
-
-static bool rightBorderReached(T_Ship* pShip)
-{
-    return (pShip->shipHitbox.x >= pShip->mvmntBorder.w);
-}
-
-static bool leftBorderReached(T_Ship* pShip)
-{
-    return (pShip->shipHitbox.x <= pShip->mvmntBorder.x);
+    CommonShip_Move(pShip->mvmntDir, pShip);
 }
